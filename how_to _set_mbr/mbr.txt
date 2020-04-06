@@ -1,0 +1,41 @@
+
+mbr.elf:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00007c00 <start>:
+    7c00:	8c c8                	mov    %cs,%eax
+    7c02:	8e d8                	mov    %eax,%ds
+    7c04:	8e c0                	mov    %eax,%es
+    7c06:	8e d0                	mov    %eax,%ss
+    7c08:	b8 00 7d 89 c4       	mov    $0xc4897d00,%eax
+    7c0d:	6a 0d                	push   $0xd
+    7c0f:	68 17 7c e8 11       	push   $0x11e87c17
+	...
+
+00007c15 <loop>:
+    7c15:	eb fe                	jmp    7c15 <loop>
+
+00007c17 <message>:
+    7c17:	48                   	dec    %eax
+    7c18:	65 6c                	gs insb (%dx),%es:(%edi)
+    7c1a:	6c                   	insb   (%dx),%es:(%edi)
+    7c1b:	6f                   	outsl  %ds:(%esi),(%dx)
+    7c1c:	2c 57                	sub    $0x57,%al
+    7c1e:	6f                   	outsl  %ds:(%esi),(%dx)
+    7c1f:	72 6c                	jb     7c8d <displayStr+0x67>
+    7c21:	64 21 0a             	and    %ecx,%fs:(%edx)
+	...
+
+00007c26 <displayStr>:
+    7c26:	55                   	push   %ebp
+    7c27:	67 8b 44 24          	mov    0x24(%si),%eax
+    7c2b:	04 89                	add    $0x89,%al
+    7c2d:	c5 67 8b             	lds    -0x75(%edi),%esp
+    7c30:	4c                   	dec    %esp
+    7c31:	24 06                	and    $0x6,%al
+    7c33:	b8 01 13 bb 0c       	mov    $0xcbb1301,%eax
+    7c38:	00 ba 00 00 cd 10    	add    %bh,0x10cd0000(%edx)
+    7c3e:	5d                   	pop    %ebp
+    7c3f:	c3                   	ret    
